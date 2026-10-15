@@ -1,0 +1,38 @@
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="sheet">
+
+<!-- shared hand-drawn wobble filters -->
+<svg class="filters" width="0" height="0" aria-hidden="true" focusable="false">
+<filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+<feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="4" result="n"></feTurbulence>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+</filter>
+<filter id="wob" x="-3%" y="-8%" width="106%" height="116%">
+<feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="9" result="n"></feTurbulence>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="3.2" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+</filter>
+</svg>
+
+<!-- sketched page border -->
+<svg class="ink thin ns sheet-border" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+<path d="M1 0.6 L50 0.2 L99.2 0.8 L99.5 50 L99 99.4 L50 99.8 L0.6 99.3 L0.3 50 L0.9 0 M99.6 0 L99.8 1.4 M0.1 99.6 L0 98.4"></path>
+</svg>
+
+<div class="wrap">
+
+<!-- header stays put while pages are erased and redrawn -->
+<header class="site-header">
+<a class="logo" href="/" aria-label="Snoops, home">
+<span class="logo-word inkbleed">Snoops</span>
+<svg class="ink logo-star" viewBox="-26 -26 52 52" aria-hidden="true" focusable="false"><path d="M0 -22 L6 -7 L22 -6 L10 4 L14 20 L0 11 L-14 20 L-10 4 L-22 -6 L-6 -7 Z"></path></svg>
+<svg class="ink logo-underline" viewBox="0 0 170 16" aria-hidden="true" focusable="false"><path class="draw" pathLength="1" d="M3 7 C40 3 90 9 166 4"></path><path class="draw thin" pathLength="1" d="M26 13 C70 9 110 14 150 10"></path></svg>
+</a>
+<nav class="nav" aria-label="Main">
+<ul>
+<li><a class="nl" href="/" data-route="home">Home<svg class="ink ul" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="redraw" pathLength="1" d="M2 5 C22 2 42 7 62 4 S90 5 98 3"></path></svg></a></li>
+<li><a class="nl" href="/about/" data-route="about">About<svg class="ink ul" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="redraw" pathLength="1" d="M2 4 C25 6 45 2 65 5 S90 3 98 5"></path></svg></a></li>
+<li><a class="nl" href="/projects/" data-route="projects">Projects<svg class="ink ul" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="redraw" pathLength="1" d="M2 5 C20 3 40 6 60 3 S88 6 98 4"></path></svg></a></li>
+<li><a class="nl" href="/contact/" data-route="contact">Contact<svg class="ink ul" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="redraw" pathLength="1" d="M2 3 C24 6 46 2 64 5 S90 3 98 5"></path></svg></a></li>
+</ul>
+</nav>
+</header>

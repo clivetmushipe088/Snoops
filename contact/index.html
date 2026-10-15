@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- @include head.html -->
+<title>Contact · Snoops</title>
+<meta name="description" content="Got a big idea? Tell Snoops about it and we'll start sketching.">
+</head>
+<body>
+<!-- @include top.html page=contact -->
+
+<main id="main" class="page-area">
+<div class="page-body" data-page-body>
+<div class="drawing">
+<!-- @include pencil.html -->
+
+<section class="hero hero--top" aria-labelledby="page-title">
+<div class="hero-copy">
+<svg class="ink dd hero-star" viewBox="-26 -26 52 52" aria-hidden="true" focusable="false"><path d="M0 -22 L6 -7 L22 -6 L10 4 L14 20 L0 11 L-14 20 L-10 4 L-22 -6 L-6 -7 Z"></path></svg>
+<h1 id="page-title" class="display inkbleed wo" tabindex="-1">Say hello.</h1>
+<svg class="ink underline-lg" style="width:min(88%, 380px)" viewBox="0 0 420 26" aria-hidden="true" focusable="false">
+<path class="draw" pathLength="1" style="stroke-width:3.4" d="M3 13 C60 7 130 16 200 10 S340 13 417 6"></path>
+<path class="draw acc" pathLength="1" d="M40 21 C110 16 200 23 310 17"></path>
+</svg>
+<p class="lede inkbleed wo" style="max-width:28em">Got a big idea? Tell us about it and we'll start sketching.</p>
+<!-- @if VITE_CONTACT_EMAIL -->
+<p class="contact-note inkbleed wo">Or write to <a href="mailto:{{VITE_CONTACT_EMAIL}}">{{VITE_CONTACT_EMAIL}}</a></p>
+<!-- @endif -->
+
+<svg class="ink plane" viewBox="0 0 360 200" aria-hidden="true" focusable="false">
+<g class="dd"><path class="paperf draw" pathLength="1" d="M20 90 L330 20 L230 180 L180 120 Z"></path><path class="thin" d="M330 20 L180 120 M180 120 L170 160 L205 140"></path></g>
+<g class="dd"><path class="draw thin" pathLength="1" style="stroke-dasharray:6 8" d="M20 90 C-10 130 20 170 60 160"></path></g>
+<g transform="translate(300 150) scale(.8)"><g class="dd"><path d="M0 -24 C2 -9 9 -2 24 0 C9 2 2 9 0 24 C-2 9 -9 2 -24 0 C-9 -2 -2 -9 0 -24 Z"></path></g></g>
+<g transform="translate(60 40) scale(.6)"><g class="dd"><path class="accf" d="M0 -22 L6 -7 L22 -6 L10 4 L14 20 L0 11 L-14 20 L-10 4 L-22 -6 L-6 -7 Z"></path></g></g>
+</svg>
+</div>
+
+<form class="form" data-contact action="{{VITE_CONTACT_ENDPOINT}}" method="POST" data-email="{{VITE_CONTACT_EMAIL}}" aria-label="Contact form">
+
+<div class="field wo">
+<label class="lab" for="f-name">Your name</label>
+<div class="fld-wrap">
+<svg class="ink thin ns fr" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M-1 4 L100 1.5 M99 -1 L99.5 100 M101 97 L0 99 M1.5 101 L1 -1"></path></svg>
+<input id="f-name" class="fld" name="name" type="text" autocomplete="name" required maxlength="120" aria-describedby="f-name-err">
+</div>
+<p class="field-error" id="f-name-err"></p>
+</div>
+
+<div class="field wo">
+<label class="lab" for="f-email">Your email</label>
+<div class="fld-wrap">
+<svg class="ink thin ns fr" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 2 L101 3.5 M98.5 -2 L99 101 M100 98.5 L-1 97 M2 100 L1.4 -2"></path></svg>
+<input id="f-email" class="fld" name="email" type="email" autocomplete="email" inputmode="email" spellcheck="false" required maxlength="200" aria-describedby="f-email-err">
+</div>
+<p class="field-error" id="f-email-err"></p>
+</div>
+
+<div class="field wo">
+<label class="lab" for="f-idea">Your big idea</label>
+<div class="fld-wrap">
+<svg class="ink thin ns fr" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M-1 1.5 L100 3 M99.5 -1.5 L98.8 101 M101 99 L1 98 M0.5 101 L1.6 -2"></path></svg>
+<textarea id="f-idea" class="fld" name="message" rows="5" required minlength="10" maxlength="2000" aria-describedby="f-idea-err f-idea-count"></textarea>
+</div>
+<div class="field-foot">
+<p class="field-error" id="f-idea-err"></p>
+<p class="field-count" id="f-idea-count">0 / 2000</p>
+</div>
+</div>
+
+<!-- spam trap: people never see or fill this -->
+<div class="hp" aria-hidden="true">
+<label for="f-gotcha">Leave this empty</label>
+<input id="f-gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+</div>
+
+<div class="form-actions">
+<button class="btn" type="submit" aria-describedby="form-hint">
+<svg class="ink btn-frame" viewBox="0 0 240 82" aria-hidden="true" focusable="false">
+<path class="draw" pathLength="1" style="stroke-width:3" d="M40 10 C100 4 170 6 206 10 C232 14 238 34 232 52 C226 72 200 76 150 76 C100 78 50 78 28 70 C6 60 4 30 20 18 C26 13 34 11 44 10"></path>
+<path class="redraw" pathLength="1" style="stroke-width:1.8; opacity:.8" d="M34 15 C90 10 160 12 200 16 C226 20 232 36 228 52 M24 24 C12 36 14 56 30 64"></path>
+</svg>
+<span class="btn-label" data-label>Send it</span>
+<svg class="ink arr" viewBox="0 0 54 26" aria-hidden="true" focusable="false"><path d="M2 14 C16 11 34 15 50 12 M40 3 C45 8 49 10 52 12 C48 15 44 19 40 24"></path></svg>
+<svg class="ink pop pop--tr" viewBox="-26 -26 52 52" aria-hidden="true" focusable="false"><path class="accf" d="M0 -22 L6 -7 L22 -6 L10 4 L14 20 L0 11 L-14 20 L-10 4 L-22 -6 L-6 -7 Z"></path></svg>
+</button>
+<p class="form-hint" id="form-hint">All three fields are needed so we can write back.</p>
+</div>
+
+<p class="form-status" role="status"></p>
+<p class="form-alert" role="alert"></p>
+</form>
+</section>
+
+</div>
+</div>
+</main>
+
+<!-- @include bottom.html -->
+</body>
+</html>
