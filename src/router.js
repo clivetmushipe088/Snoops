@@ -2,7 +2,7 @@
 // Every route is a real HTML file, so links work without JS; this only upgrades the swap.
 
 const BASE = import.meta.env.BASE_URL; // "/" locally, "/Snoops/" on GitHub Pages
-const ROUTES = new Set(['', 'about/', 'projects/', 'contact/'].map((p) => BASE + p));
+const ROUTES = new Set(['', 'flavours/', 'campaign/', 'contact/'].map((p) => BASE + p));
 const ERASE_MS = 500; // keep in sync with --erase-ms in styles.css
 const DRAW_MS = 500; // keep in sync with --draw-ms
 
@@ -38,7 +38,7 @@ function load(path) {
       })
       .then((text) => {
         const doc = new DOMParser().parseFromString(text, 'text/html');
-        if (!doc.querySelector('[data-page-body]')) throw new Error('Not a Snoops page');
+        if (!doc.querySelector('[data-page-body]')) throw new Error('Not a site page');
         return readPage(doc);
       });
     page.catch(() => cache.delete(path)); // let a later attempt retry

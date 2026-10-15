@@ -4,7 +4,7 @@
 
 const TIMEOUT_MS = 15000;
 
-const LABELS = { name: 'your name', email: 'your email', message: 'your big idea' };
+const LABELS = { name: 'your name', email: 'your email', message: 'your message' };
 
 function problem(field) {
   const value = field.value.trim();
@@ -15,7 +15,7 @@ function problem(field) {
       if (!value) return 'We need your email so we can write back.';
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? '' : 'That email looks incomplete. It should look like name@example.com.';
     case 'message':
-      if (!value) return 'Tell us a little about your idea.';
+      if (!value) return 'Tell us a little about what you need.';
       return value.length >= 10 ? '' : 'A few more words, please (at least 10 characters).';
     default:
       return '';

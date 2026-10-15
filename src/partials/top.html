@@ -22,17 +22,24 @@
 
 <!-- header stays put while pages are erased and redrawn -->
 <header class="site-header">
-<a class="logo" href="/" aria-label="Snoops, home">
-<span class="logo-word inkbleed">Snoops</span>
-<svg class="ink logo-star" viewBox="-26 -26 52 52" aria-hidden="true" focusable="false"><path d="M0 -22 L6 -7 L22 -6 L10 4 L14 20 L0 11 L-14 20 L-10 4 L-22 -6 L-6 -7 Z"></path></svg>
+<a class="logo" href="/" aria-label="Kwihuta, home">
+<span class="logo-word inkbleed">Kwihuta</span>
+<svg class="ink logo-star" viewBox="-26 -26 52 52" aria-hidden="true" focusable="false"><path class="accf" d="M4 -22 L-10 2 L0 2 L-4 22 L12 -4 L2 -4 L8 -22 Z"></path></svg>
 <svg class="ink logo-underline" viewBox="0 0 170 16" aria-hidden="true" focusable="false"><path class="draw" pathLength="1" d="M3 7 C40 3 90 9 166 4"></path><path class="draw thin" pathLength="1" d="M26 13 C70 9 110 14 150 10"></path></svg>
 </a>
+<div class="header-end">
 <nav class="nav" aria-label="Main">
 <ul>
 <li><a class="nl" href="/" data-route="home">Home<svg class="ink ul" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="redraw" pathLength="1" d="M2 5 C22 2 42 7 62 4 S90 5 98 3"></path></svg></a></li>
-<li><a class="nl" href="/about/" data-route="about">About<svg class="ink ul" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="redraw" pathLength="1" d="M2 4 C25 6 45 2 65 5 S90 3 98 5"></path></svg></a></li>
-<li><a class="nl" href="/projects/" data-route="projects">Projects<svg class="ink ul" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="redraw" pathLength="1" d="M2 5 C20 3 40 6 60 3 S88 6 98 4"></path></svg></a></li>
+<li><a class="nl" href="/flavours/" data-route="flavours">Flavours<svg class="ink ul" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="redraw" pathLength="1" d="M2 4 C25 6 45 2 65 5 S90 3 98 5"></path></svg></a></li>
+<li><a class="nl" href="/campaign/" data-route="campaign">Campaign<svg class="ink ul" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="redraw" pathLength="1" d="M2 5 C20 3 40 6 60 3 S88 6 98 4"></path></svg></a></li>
 <li><a class="nl" href="/contact/" data-route="contact">Contact<svg class="ink ul" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="redraw" pathLength="1" d="M2 3 C24 6 46 2 64 5 S90 3 98 5"></path></svg></a></li>
 </ul>
 </nav>
+<!-- shown by theme.js; without JS the page simply follows the system theme -->
+<button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" data-theme-toggle hidden>
+<svg class="ink moon" viewBox="-26 -26 52 52" aria-hidden="true" focusable="false"><path d="M4 -20 C-10 -18 -18 -6 -16 6 C-14 18 0 24 12 18 C18 15 21 11 22 6 C12 12 -2 8 -4 -4 C-6 -12 -2 -18 4 -20 Z"></path><path class="thin" d="M14 -18 L14 -10 M10 -14 L18 -14"></path></svg>
+<svg class="ink sun" viewBox="-26 -26 52 52" aria-hidden="true" focusable="false"><path class="accf" d="M0 -10 C6 -10 10 -6 10 0 C10 6 6 10 0 10 C-6 10 -10 6 -10 0 C-10 -6 -6 -10 0 -10 Z"></path><path d="M0 -22 L0 -15 M0 15 L0 22 M-22 0 L-15 0 M15 0 L22 0 M-16 -16 L-11 -11 M16 16 L11 11 M16 -16 L11 -11 M-16 16 L-11 11"></path></svg>
+</button>
+</div>
 </header>

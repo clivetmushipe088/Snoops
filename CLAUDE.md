@@ -1,6 +1,6 @@
-# Snoops site
+# Kwihuta site
 
-Hand-drawn studio site: Vite + plain HTML, CSS and JS. No framework. `reference/Main.dc.html` is the original design prototype (custom `<x-dc>` format). It is the visual source of truth, not code to run.
+Site for Kwihuta, an energy drink made in Rwanda, in a hand-drawn notebook style. Vite + plain HTML, CSS and JS. No framework. `reference/Main.dc.html` is the original design prototype (custom `<x-dc>` format). It is the visual source of truth for the notebook look, not code to run. The repo and GitHub Pages path are still named `Snoops`.
 
 ## Commands
 
@@ -19,7 +19,8 @@ Config lives in `.env` (see `.env.example`): `VITE_CONTACT_ENDPOINT` (required f
 
 ## Structure
 
-- `index.html`, `about/index.html`, `projects/index.html`, `contact/index.html`: the four routes, each a real page so deep links and no-JS browsing work.
+- `index.html`, `flavours/index.html`, `campaign/index.html`, `contact/index.html`: the four routes, each a real page so deep links and no-JS browsing work. Adding or renaming a route means updating `ROUTES` in `router.js`, `build.rollupOptions.input` in `vite.config.js`, and the nav in `partials/top.html`.
+- `public/images/`: `can-original.png`, `can-blue-raspberry.png` (transparent can renders), `gorilla.png` (transparent gorilla head), and `campaign/*-800.webp` / `*-1600.webp` (gallery artwork at two widths, used with `srcset`).
 - `src/partials/`: shared markup, inlined at build time by the `html-partials` plugin in `vite.config.js`:
   - `<!-- @include top.html page=about -->` inlines a partial; `page=` sets `aria-current="page"` on the matching `data-route` nav link.
   - `{{VITE_X}}` inserts an escaped env value; `<!-- @if VITE_X -->…<!-- @endif -->` keeps a block only when it's set.
@@ -31,9 +32,17 @@ Config lives in `.env` (see `.env.example`): `VITE_CONTACT_ENDPOINT` (required f
 **Palette.** Only these tokens from `:root`:
 - ink `#25252b`, soft ink `#2b2b31`, muted ink `#4a4a52`
 - paper `#f1ede1`, ruled lines `rgba(70,78,100,.14)` every 40px
-- **one accent, `--accent: #b4492f`**
+- **one accent, Kwihuta yellow `--accent: #ffd21f`**
 
-Never add a second accent or hard-code a colour. The accent is for small marks only: second underline strokes, filled stars, the pencil and eraser tips, field focus and error frames. It is never used for body text.
+Never add a second accent or hard-code a colour. Product colours (the Blue Raspberry blue) appear only inside the can photos and campaign images, never as UI colours.
+
+The accent is for marks only: second underline strokes (drawn at stroke-width 4, because yellow is light), filled bolts and stars, the `.hl` marker swipe behind a word, and the pencil and eraser tips. Yellow is too light on paper to carry meaning, so it is never used for text, focus or errors. Focus and error states use heavier or dashed ink instead.
+
+**Dark mode.** A chalkboard: neutral black and white only, chalk-white ink `#f2f2f2` on pure black `#000000`, grey grain, and a faint white chalk-dust haze on text (`--bleed`). Never tint the dark greys warm or cool. The yellow accent, can photos and campaign images keep their colour.
+- It follows `prefers-color-scheme` by default. The header toggle (`src/theme.js`) sets `data-theme="light|dark"` on `<html>` and saves it in `localStorage`; choosing the system's own theme clears the override. An inline script in `partials/head.html` applies the saved choice before first paint.
+- Themes are tokens only. The dark values live in two identical blocks in `styles.css` (`@media (prefers-color-scheme: dark) :root:not([data-theme="light"])` and `:root[data-theme="dark"]`); edit both together. Never hard-code a colour, shadow or blend mode in a component: add a token instead (`--bleed`, `--shadow`, `--grain-blend`, `--grain-opacity`, `--on-accent`).
+- Text on the yellow uses `--on-accent` (dark in both themes).
+- Black-ink raster art needs a separate dark version, shown with `.only-light` / `.only-dark` (e.g. `gorilla.png` / `gorilla-dark.png`). Product photos and campaign images stay the same in both themes.
 
 **Fonts.**
 - Caveat (500/600/700) for display: logo, headings, nav, buttons, labels.
@@ -58,6 +67,9 @@ Never add a second accent or hard-code a colour. The accent is for small marks o
 New hand-drawn elements get one of the two. Never apply either to body copy or form inputs.
 
 **Shared motifs.**
+- Lightning bolt (the Kwihuta mark, usually `.accf` filled): `M4 -22 L-10 2 L0 2 L-4 22 L12 -4 L2 -4 L8 -22 Z`
+- Crown: `M-22 12 L-22 -10 L-10 2 L0 -14 L10 2 L22 -10 L22 12 Z`
+- Mountains (Made in Rwanda): zig-zag ridgelines with small snow-cap strokes
 - Five-point star: `M0 -22 L6 -7 L22 -6 L10 4 L14 20 L0 11 L-14 20 L-10 4 L-22 -6 L-6 -7 Z`
 - Four-point sparkle: `M0 -24 C2 -9 9 -2 24 0 C9 2 2 9 0 24 C-2 9 -9 2 -24 0 C-9 -2 -2 -9 0 -24 Z`
 - Each heading gets a double underline: an ink stroke plus a shorter accent stroke.
@@ -98,4 +110,12 @@ If you change a duration, change both the CSS variable and `ERASE_MS` / `DRAW_MS
 
 ## Content
 
-All copy is in the page HTML files. The project card lines on `/projects/` are labelled "Studio concept, 2026". Replace them with real client work when it exists; don't invent client names.
+All copy is in the page HTML files. Brand facts are limited to what the artwork states:
+- two flavours, The Original and Blue Raspberry
+- 250 ml cans
+- made in Rwanda
+- the taglines "More energy. Bigger moves.", "Bigger energy. Bigger moves." and "Two flavours. One attitude."
+
+Don't invent ingredients, caffeine content, prices, stockists or health claims. The campaign images are artwork; don't describe them as real placements.
+
+The cans in `public/images/` may be stand-ins cut from the lineup image. Replace them with the real renders at the same filenames, keeping the background transparent and cropped tight to the can.

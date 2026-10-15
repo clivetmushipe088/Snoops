@@ -1,4 +1,4 @@
-/* Snoops: hand-drawn notebook look. Design rules live in CLAUDE.md. */
+/* Kwihuta: hand-drawn notebook look. Design rules live in CLAUDE.md. */
 
 :root {
   --ink: #25252b;
@@ -6,12 +6,62 @@
   --ink-muted: #4a4a52;
   --paper: #f1ede1;
   --rule: rgba(70, 78, 100, 0.14);
-  --accent: #b4492f; /* the one accent colour; never add a second */
+  --accent: #ffd21f; /* Kwihuta yellow: the one accent colour; never add a second */
+  --on-accent: #25252b; /* text sitting on the yellow, in both themes */
+  --bleed: rgba(37, 37, 43, 0.35);
+  --shadow: rgba(37, 37, 43, 0.22);
+  --grain-blend: multiply;
+  --grain-opacity: .55;
+  --grain-filter: none;
+  --show-light: block; /* images drawn for one theme */
+  --show-dark: none;
+  --moon: block; /* theme toggle shows what you'd switch to */
+  --sun: none;
+  color-scheme: light;
   --font-hand: 'Caveat', 'Comic Sans MS', cursive;
   --font-body: 'Kalam', 'Comic Sans MS', cursive;
   /* page change: erase, then draw. Keep in sync with ERASE_MS / DRAW_MS in router.js */
   --erase-ms: 500ms;
   --draw-ms: 500ms;
+}
+
+/* Dark mode: a chalkboard. Neutral black and white; only the yellow and photos keep colour. Follows the system unless the header toggle set data-theme.
+   The two blocks must stay identical. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #f2f2f2;
+    --ink-soft: #e2e2e2;
+    --ink-muted: #a6a6a6;
+    --paper: #000000;
+    --rule: rgba(255, 255, 255, 0.07);
+    --bleed: rgba(255, 255, 255, 0.16); /* chalk dust haze */
+    --shadow: rgba(0, 0, 0, 0.6);
+    --grain-blend: screen;
+    --grain-opacity: .2;
+    --grain-filter: grayscale(1);
+    --show-light: none;
+    --show-dark: block;
+    --moon: none;
+    --sun: block;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #f2f2f2;
+  --ink-soft: #e2e2e2;
+  --ink-muted: #a6a6a6;
+  --paper: #000000;
+  --rule: rgba(255, 255, 255, 0.07);
+  --bleed: rgba(255, 255, 255, 0.16); /* chalk dust haze */
+  --shadow: rgba(0, 0, 0, 0.6);
+  --grain-blend: screen;
+  --grain-opacity: .2;
+  --grain-filter: grayscale(1);
+  --show-light: none;
+  --show-dark: block;
+  --moon: none;
+  --sun: block;
+  color-scheme: dark;
 }
 
 html { background: var(--paper); }
@@ -31,10 +81,10 @@ a:focus-visible, button:focus-visible { outline: 2px dashed var(--ink); outline-
 .ink { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .thin { stroke-width: 1.7; }
 .ns path { vector-effect: non-scaling-stroke; }
-.acc { stroke: var(--accent); }
+.acc { stroke: var(--accent); stroke-width: 4; } /* yellow is light, so accent strokes run thicker, like a highlighter */
 .accf { fill: var(--accent); }
 .paperf { fill: var(--paper); }
-.inkbleed { text-shadow: 0.5px 0.4px 0 rgba(37, 37, 43, 0.35); }
+.inkbleed { text-shadow: 0.5px 0.4px 0 var(--bleed); }
 
 /* doodles wiggle on hover */
 .dd { transform-box: fill-box; transform-origin: center; }
@@ -69,7 +119,7 @@ a:focus-visible, button:focus-visible { outline: 2px dashed var(--ink); outline-
 }
 .grain {
   position: absolute; left: 0; top: 0; width: 100%; height: 100%;
-  pointer-events: none; mix-blend-mode: multiply; opacity: .55; z-index: 3;
+  pointer-events: none; mix-blend-mode: var(--grain-blend); opacity: var(--grain-opacity); z-index: 3; filter: var(--grain-filter);
 }
 .wrap { position: relative; z-index: 2; max-width: 1240px; margin: 0 auto; padding: 34px 52px 60px; box-sizing: border-box; }
 
@@ -80,7 +130,17 @@ a:focus-visible, button:focus-visible { outline: 2px dashed var(--ink); outline-
 .logo-star { width: 24px; height: 24px; margin-top: 6px; filter: url(#rough); }
 .logo-underline { position: absolute; left: 0; bottom: 0; width: 100%; height: 16px; filter: url(#rough); }
 
+.header-end { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 28px; }
 .nav ul { display: flex; flex-wrap: wrap; gap: 6px 44px; margin: 0; padding: 0; list-style: none; }
+
+.theme-toggle {
+  display: inline-grid; place-items: center; width: 48px; height: 48px; padding: 0;
+  border: 0; background: none; color: var(--ink); cursor: pointer;
+}
+.theme-toggle svg { width: 32px; height: 32px; overflow: visible; filter: url(#rough); }
+.theme-toggle .moon { display: var(--moon); }
+.theme-toggle .sun { display: var(--sun); }
+.theme-toggle:hover svg { animation: wig .7s ease-in-out; }
 .nl {
   position: relative; display: inline-block; padding: 4px 2px 10px;
   font-family: var(--font-hand); font-size: 30px; font-weight: 600; color: var(--ink); text-decoration: none;
@@ -135,15 +195,11 @@ a:focus-visible, button:focus-visible { outline: 2px dashed var(--ink); outline-
 .card-meta { color: var(--ink-muted); }
 .card-squiggle { width: min(100%, 200px); height: auto; opacity: .7; }
 
-.card--project { gap: 10px; padding: 30px 30px 28px; }
-.card--project .ill { width: 100%; max-width: 230px; height: auto; }
-.card--project .card-title { font-size: 36px; }
 
 .cards {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(var(--col, 240px), 100%), 1fr));
   gap: 30px 26px; margin-top: 34px;
 }
-.cards--projects { --col: 440px; gap: 36px 30px; }
 
 .foot {
   position: relative; display: inline-flex; align-items: center; gap: 18px; padding: 6px 4px 16px;
@@ -172,7 +228,7 @@ a:focus-visible, button:focus-visible { outline: 2px dashed var(--ink); outline-
   margin: 0; font-family: var(--font-hand); font-weight: 700;
   font-size: clamp(52px, 8.8vw, 124px); line-height: .98; letter-spacing: .5px; filter: url(#wob);
 }
-.display span { display: block; }
+.display > span { display: block; }
 .display--sm { font-size: clamp(48px, 8vw, 112px); }
 .underline-lg { display: block; width: min(88%, 420px); height: auto; margin-top: 6px; filter: url(#rough); }
 .lede { margin: 26px 0 0; max-width: 30em; font-size: 21px; line-height: 40px; font-weight: 400; color: var(--ink-soft); }
@@ -201,15 +257,16 @@ a:focus-visible, button:focus-visible { outline: 2px dashed var(--ink); outline-
 
 /* ---------- contact ---------- */
 .contact-note { margin: 14px 0 0; font-size: 19px; line-height: 1.6; color: var(--ink-soft); }
-.contact-note a { text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.contact-note a { text-decoration-color: var(--accent); text-decoration-thickness: 4px; text-underline-offset: 3px; }
 .plane { display: block; width: min(100%, 360px); height: auto; margin-top: 30px; filter: url(#rough); }
 
 .form { display: flex; flex-direction: column; gap: 26px; min-width: 0; }
 .field { position: relative; display: flex; flex-direction: column; gap: 6px; }
 .fld-wrap { position: relative; }
 .fr { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; filter: url(#rough); transition: stroke .2s; }
-.field:focus-within .fr, .field[data-invalid] .fr { stroke: var(--accent); }
-.field[data-invalid] .fr { stroke-width: 2.6; }
+/* yellow is too light to mark focus or errors on paper, so those use heavier ink instead */
+.field:focus-within .fr { stroke-width: 3.2; }
+.field[data-invalid] .fr { stroke-width: 3.2; stroke-dasharray: 7 5; }
 .lab { font-family: var(--font-hand); font-size: 28px; font-weight: 600; line-height: 1; }
 .fld {
   position: relative; box-sizing: border-box; width: 100%; padding: 14px 18px; border: 0; background: transparent;
@@ -220,7 +277,7 @@ a:focus-visible, button:focus-visible { outline: 2px dashed var(--ink); outline-
 .field-error, .field-count { margin: 0; font-size: 16px; line-height: 1.5; }
 .field-error { color: var(--ink); }
 .field-error:empty { display: none; }
-.field-error::before { content: '✗ '; color: var(--accent); font-weight: 700; }
+.field-error::before { content: '✗ '; font-weight: 700; }
 .field-count { margin-left: auto; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 
@@ -229,7 +286,47 @@ a:focus-visible, button:focus-visible { outline: 2px dashed var(--ink); outline-
 .form-status, .form-alert { margin: 0; }
 .form-status:empty, .form-alert:empty { display: none; }
 .form-status { font-family: var(--font-hand); font-size: 26px; font-weight: 600; line-height: 1.1; }
-.form-alert { font-size: 17px; line-height: 1.6; padding-left: 14px; border-left: 3px solid var(--accent); }
+.form-alert { font-size: 17px; line-height: 1.6; padding-left: 14px; border-left: 3px solid var(--ink); }
+
+/* ---------- Kwihuta: highlighter, cans, flavours, gallery ---------- */
+/* a yellow marker swipe behind a word, like the "Bigger" bar on the posters */
+.hl { position: relative; display: inline-block; z-index: 0; color: var(--on-accent); text-shadow: none; }
+.hl svg {
+  position: absolute; left: -4%; top: 6%; width: 108%; height: 112%; z-index: -1; overflow: visible;
+  fill: none; stroke: var(--accent); stroke-width: 52; stroke-linecap: round; filter: url(#rough);
+}
+
+.art--cans { aspect-ratio: 1; }
+.art--cans .can { position: absolute; height: auto; filter: drop-shadow(6px 10px 10px var(--shadow)); }
+.can--left { left: 13%; top: 11%; width: 30%; transform: rotate(-8deg); }
+.can--right { left: 57%; top: 15%; width: 30%; transform: rotate(7deg); }
+.art--cans .art-caption { top: auto; bottom: -2%; left: 4%; width: auto; }
+
+.band { display: flex; flex-wrap: wrap; align-items: center; gap: 24px 48px; margin-top: 60px; }
+.gorilla { width: min(260px, 60%); height: auto; }
+.only-light { display: var(--show-light); }
+.only-dark { display: var(--show-dark); }
+.band-copy { flex: 1 1 320px; min-width: 0; }
+.band .section-title { font-size: 46px; line-height: 1.05; }
+
+.cards--flavours { --col: 460px; gap: 40px 34px; }
+.flavour { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 18px 28px; padding: 30px; }
+.flavour-can { flex: 0 0 auto; width: 140px; }
+.flavour-can .can { display: block; width: 100%; height: auto; filter: drop-shadow(4px 8px 8px var(--shadow)); }
+.flavour-copy { flex: 1 1 200px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.flavour .card-title { font-size: 40px; }
+.flavour-tag { margin: 0; font-family: var(--font-hand); font-size: 24px; font-weight: 600; line-height: 1.1; }
+.specs { display: grid; gap: 2px; margin: 4px 0 0; font-size: 16px; line-height: 1.6; }
+.specs div { display: flex; gap: 8px; }
+.specs dt { font-weight: 400; color: var(--ink-muted); min-width: 5.5em; }
+.specs dd { margin: 0; }
+
+.gallery { columns: 3 280px; column-gap: 34px; margin-top: 40px; }
+.shot { break-inside: avoid; margin: 0 0 40px; padding: 14px 14px 12px; gap: 10px; }
+.shot-link { position: relative; display: block; }
+.shot img { display: block; width: 100%; height: auto; }
+.shot figcaption { position: relative; font-family: var(--font-hand); font-size: 24px; font-weight: 600; line-height: 1.15; }
+.shot-kind { display: block; font-family: var(--font-body); font-size: 14px; font-weight: 400; color: var(--ink-muted); }
 
 /* ---------- page change: eraser rubs out, pencil draws in ---------- */
 .erasing {
@@ -298,7 +395,9 @@ a:focus-visible, button:focus-visible { outline: 2px dashed var(--ink); outline-
   .section-title { font-size: 46px; }
   .foot { font-size: 32px; gap: 12px; }
   .foot .arr { width: 72px; }
-  .card--project .card-title { font-size: 32px; }
+  .band .section-title { font-size: 38px; }
+  .flavour .card-title { font-size: 34px; }
+  .flavour-can { width: 110px; }
 }
 @media (max-width: 560px) {
   .art-caption { position: static; width: auto; margin-top: 4px; text-align: center; font-size: 24px; }

@@ -60,8 +60,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         home: resolve(root, 'index.html'),
-        about: resolve(root, 'about/index.html'),
-        projects: resolve(root, 'projects/index.html'),
+        flavours: resolve(root, 'flavours/index.html'),
+        campaign: resolve(root, 'campaign/index.html'),
         contact: resolve(root, 'contact/index.html'),
       },
     },
