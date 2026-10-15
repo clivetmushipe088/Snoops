@@ -1,7 +1,8 @@
 // Page changes: the eraser rubs the current page out, then the pencil draws the next one in.
 // Every route is a real HTML file, so links work without JS; this only upgrades the swap.
 
-const ROUTES = new Set(['/', '/about/', '/projects/', '/contact/']);
+const BASE = import.meta.env.BASE_URL; // "/" locally, "/Snoops/" on GitHub Pages
+const ROUTES = new Set(['', 'about/', 'projects/', 'contact/'].map((p) => BASE + p));
 const ERASE_MS = 500; // keep in sync with --erase-ms in styles.css
 const DRAW_MS = 500; // keep in sync with --draw-ms
 

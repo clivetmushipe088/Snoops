@@ -10,6 +10,13 @@ Hand-drawn studio site: Vite + plain HTML, CSS and JS. No framework. `reference/
 
 Config lives in `.env` (see `.env.example`): `VITE_CONTACT_ENDPOINT` (required for the form to send) and `VITE_CONTACT_EMAIL` (optional).
 
+## Deploying (GitHub Pages)
+
+- `.github/workflows/deploy.yml` builds and deploys on every push to `main`. The Pages source must be "GitHub Actions", not a branch, because publishing the raw repo serves unbuilt HTML.
+- The site is served from `https://<user>.github.io/<repo>/`. The workflow sets `BASE_PATH=/<repo>/`; locally it defaults to `/`.
+- Write internal links root-relative (`<a href="/about/">`). The `html-partials` plugin prefixes the base, and `router.js` builds its routes from `import.meta.env.BASE_URL`. Never hard-code `/Snoops/`.
+- Form settings come from Actions repository **variables** `VITE_CONTACT_ENDPOINT` and `VITE_CONTACT_EMAIL`. These are not secrets, since they end up in the HTML.
+
 ## Structure
 
 - `index.html`, `about/index.html`, `projects/index.html`, `contact/index.html`: the four routes, each a real page so deep links and no-JS browsing work.
